@@ -10,8 +10,9 @@ form(action='/query' method='GET')
     legend Search
     label  Query term(in title)
     input# term(type='text')
+    <input type="checkbox" name="sensitive" />
     label  case sensitive
-    input# sensitive(type='checkbox')
+    <input type="checkbox" name="world" />
     label  whole world
-    input# world(type='checkbox')
+   
   input(type='submit' value='Submit')
