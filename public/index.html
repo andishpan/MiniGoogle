@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    
+        <h1 class="game--title">Tic Tac Toe</h1>
+        <button class="game--start" id = "start"  onclick="hide()"  > Start Game</button>
+        <section class="board" id = "game">
+            <div id="0" class="cell"></div>
+            <div id="1" class="cell" ></div>
+            <div id="2" class="cell"></div>
+            <div id="3"class="cell" ></div>
+            <div id="4" class="cell"></div>
+            <div id="5" class="cell" ></div>
+            <div id="6" class="cell" ></div>
+            <div id="7" class="cell" ></div>
+            <div id="8" class="cell" ></div>
+       
+        <h2 class="game--status" id = "playerStatus"></h2>
+        
+        <br>
+        <br>
+        <br>
+        <input type= "reset" value = "Restart"  onclick="restartGame()"  >
+
+       
+
+       
+    </section>
+    <p class="game-over-message" id = "gameover">Game Over!</p>
+    <p class="winner-message" id = "winnerA">Player A hat gewonnen!</p>
+    <p class="winner-message2" id = "winnerB">Player B hat gewonnen!</p>
+    <p class="draw-message" id = "draw">Draw!</p>
+
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
