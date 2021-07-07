@@ -17,7 +17,6 @@ public class ExampleCSV {
     private final static String delimitter= ",";
 
    public static ArrayList<String> dataURL = new ArrayList<>();
-    DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
    public static  ArrayList<String> altData= new ArrayList<>();
     public static ArrayList<String> titleData= new ArrayList<>();
 
