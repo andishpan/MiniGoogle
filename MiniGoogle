@@ -1,54 +1,119 @@
 
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+package searchengine;
 
 import spark.ModelAndView;
-
 import spark.template.jade.JadeTemplateEngine;
 
+import java.util.*;
 
 import static spark.Spark.*;
 
-import java.net.*;
-import java.util.*;
-import javax.swing.*;
+public class MiniGoogle  extends  ExampleCSV{
 
+    public MiniGoogle(String url, String alt, String title) {
+        super(url, alt, title);
+    }
 
-public class MiniGoogle  {
+    public static void main(String[] args)  {
 
-
-
-    private HashMap<String, URL > data = new HashMap<>();
-    private ArrayList<String> titles = new ArrayList<String>();
-    private JList list;
-
-
-
-    public static void main(String[] args) throws IOException {
+       // String url = "https://xkcd.com/2478/";
 
 
         staticFiles.location("/public");
 
+
         get("/search", (req, res) -> {
 
-            long time = System.currentTimeMillis();
-            Map<String, Object> model = new HashMap<>();
-            model.put("time",time) ;
+            Map<String, Object> map = new HashMap<>();
 
-            ModelAndView modelAndView = new ModelAndView(model, "search");
-            return  modelAndView;                // "MiniGoogle by Andrian , Mauro"; // TODO: replace X and Y by your name(s)
-        }, new JadeTemplateEngine());
+
+
+            return new JadeTemplateEngine().render(new ModelAndView(map, "search"))  ;
+        });
+
+
+        get("/query", (req, res) -> {
+
+       List<ExampleCSV>comics = new ArrayList<ExampleCSV>();
+            comics.add(new ExampleCSV("https://xkcd.com/2478/", "Alien Visitors 2", "Although fresh juice DOES sound--\"\" \"\"NO! For humanity to survive we must learn from the mistakes of the past."));
+            comics.add (new ExampleCSV("https://xkcd.com/2477/", "Alien Visitors", "Stay right there, we'll be back in a minute. We've just gotta brainstorm some new wonders. Have you all figured out gears yet? Yes? Crap."));
+            comics.add (new ExampleCSV("https://xkcd.com/2476/", "Base Rate", "Sure, you can talk about per-capita adjustment, but if you want to solve the problem, it's obvious that this is the group you need to focus on."));
+
+            data.put("comics", comics);
+
+            return new JadeTemplateEngine().render(new ModelAndView(data, "comics"))  ;            // "MiniGoogle by Andrian , Mauro"; // TODO: replace X and Y by your name(s)
+        });
+
+
+
+
+
+
+    /*    post("/query", (req, res) ->{
+
+                req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/tmp"));
+
+                Part data = null;
+
+                try{
+
+                    data = req.raw().getPart("term");
+
+                }catch (IOException| ServletException e){
+                    e.printStackTrace();
+                }
+
+
+                try (InputStream stream = data.getInputStream()) {
+                    StringWriter writer = new StringWriter();
+                    IOUtils.copy(stream, writer);
+                    String string = writer.toString();
+                    System.out.println("Results from input :" + string);
+
+                }catch (IOException e){
+                    e.printStackTrace();
+
+                }
+
+                Map<String, String[]> parameterMap = req.raw().getParameterMap();
+                Set<String> parameterSet = parameterMap.keySet();
+                parameterSet.stream().forEach(each -> {
+                    String join = String.join("," ,parameterMap.get(each));
+                    System.out.println("This is the key from the parameter map :" + each);
+                    System.out.println("This is the value from the parameter map :" + join);
+                });
+
+            return new JadeTemplateEngine().render(new ModelAndView(data, "result")) + "Succesfully uploaded data";
+        });*/
+
+
+
 
 
 
     }
 
 
-    
+    public static void printMap(Map mp) {
+        Iterator it = mp.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+    }
+
+
+
+ /*   public static String render(Request req){
+        String status = req.queryParams("status");
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("search", )
+
+
+    }          */
+
 
 
 
