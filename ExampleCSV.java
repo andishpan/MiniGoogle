@@ -1,27 +1,61 @@
 
+package searchengine;
+
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 public class ExampleCSV {
 
-    private final static String delimitter= ",";
+    String title;
+    String alt;
+    String url;
 
-   public static ArrayList<String> dataURL = new ArrayList<>();
-   public static  ArrayList<String> altData= new ArrayList<>();
-    public static ArrayList<String> titleData= new ArrayList<>();
+    public ExampleCSV(String url, String alt, String title) {
+        this.url = url;
+        this.alt = alt;
+        this.title = title;
+
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAlt() {
+        return alt;
+    }
+
+    public String getURL() {
+        return url;
+    }
+
+    public String toString(){
+        return "Comic [url" + url + ", alt =" + alt + ", title =" + title + "]";
+    }
 
 
+    public Iterable<String> getAllComics() {
+        return comics;
+    }
 
+
+   public static List<String> urlList = new ArrayList<String>();
+
+    public static List<String> altList = new ArrayList<String>();
+
+    public static List<String> titleList = new ArrayList<String>();
+
+    public static HashMap<String, Object> data = new HashMap<String, Object>();
+
+    private static final List<String> comics = new ArrayList<String>();
 
 
     public static void main(String[] args) throws IOException, CsvValidationException {
@@ -33,10 +67,10 @@ public class ExampleCSV {
         Scanner scanner;
         //InputStream inputStream = ClassLoader.getSystemResourceAsStream("comics.csv");
         csvParser = new CSVParser();
-       //scanner = new Scanner(inputStream);
+        //scanner = new Scanner(inputStream);
         //String line = scanner.nextLine();
         //String[] words = csvParser.parseLine(line);
-       // System.out.println("URL: " + words[0]);
+        // System.out.println("URL: " + words[0]);
         //System.out.println("alt: " + words[1]);
         //System.out.println("title: " + words[2]);
 
@@ -50,12 +84,15 @@ public class ExampleCSV {
             System.out.println("Line # " + lineNumber);
 
             // nextLine[] is an array of values from the line
-            dataURL.add(nextLine[0]);
-            altData.add(nextLine[1]);
-            titleData.add(nextLine[2]);
+            urlList.add(nextLine[0]);
+            altList.add(nextLine[1]);
+            titleList.add(nextLine[2]);
+
+            comics.add(nextLine[2]);
 
         }
+
     }
+
+
 }
-
-
