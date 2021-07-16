@@ -2,31 +2,114 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$Mini Google</title>
-    <img src="281764.png" height="150px" >
+    <title>Mini Google</title>
+    <img src="upload_file.png" height="150px" >
 </head>
-<body>
 
-    <form action = "/query" method = "GET" >
+<style>
+
+body{
+    font-family: Arial;
+}
+
+
+
+div.container{
+    display: flex;
+    flex-wrap:wrap;
+ 
+
+    width: 40%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border: solid 2px;
+    clear: both;
+}
+
+input[type = text], input[type = checkbox]{
+    
+    display: list-item;
+    padding: 7px 7px;
+    margin: 8px 10;
+   
+    
+}
+
+
+input[type=submit] {
+   
+    background-color: #0468aa;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: solid 2px black;
+    border-radius: 4px;
+    cursor: pointer;
+    clear: both;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #eed709;
+  }
+
+
+p{
+   display: none;
+     
+}
+
+
+img{
+    position: relative;
+    left: 30px;
+    margin: 20px;
+   
+}
+</style>
+  
+
+<body>
+  
+<hr>
+     <div class = "container">
+        
+    <form action = "/query"  method = "GET" enctype="multipart/form-data" >
         <fieldset>
 
             <legend>Search</legend>
 
             <label > Query term(in title)</label>
-            <input  id = " term"type="text">
+            <input  id = " QueryTerm"type="text" name = "term">
 
             <label > case sensitive</label>
-            <input id = " sensitive" type="checkbox">
+            <input id = " sensitive" type="checkbox" name = "sensitive">
 
             <label > whole world</label>
-            <input id = " world"type="checkbox">
+            <input id = " world" type="checkbox"  name = "wholeWorld">
 
         </fieldset>
 
-        <input type="submit" value = "Submit">
+        <input type="submit" value = "Submit" name = "getData">
     </form>
+
+    <ul>
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+      </ul> 
+
+
+    <p>Your case insensitive search for </p>
+    <p>Your case sensitive search for </p>
+
+
+</div>
+
+
 </body>
 </html>
