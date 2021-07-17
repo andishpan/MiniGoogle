@@ -50,7 +50,7 @@ public class ExampleCSV {
     }
 
 
-    public static String strFile = "C:\\Files\\XKCD.csv";
+
 
     public static CSVReader reader;
     public static String[] nextLine;
@@ -90,19 +90,11 @@ public class ExampleCSV {
     }
 
 
-    public static List<String> urlList = new ArrayList<String>();
-
-    public static List<String> altList = new ArrayList<String>();
-
-    public static List<String> titleList = new ArrayList<String>();
-
-    public static HashMap<String, Object> data = new HashMap<String, Object>();
-
     private static final List<String> comics = new ArrayList<String>();
 
     private static List<ExampleCSV> readComicsFromCSV() throws FileNotFoundException {
         List<ExampleCSV> comics = new ArrayList<>();
-        String strFile = "C:\\Files\\XKCD.csv";
+        String strFile = "C:\\HTW Berlin\\3 SEMESTER\\Comics\\src\\main\\resources\\comics.csv";
         String line = "";
 
         BufferedReader br = new BufferedReader(new FileReader(strFile));
@@ -120,8 +112,6 @@ public class ExampleCSV {
                 comics.add(comic);
 
 
-
-
             }
 
         } catch (IOException ioe) {
@@ -130,56 +120,6 @@ public class ExampleCSV {
 
         return comics;
     }
-
-
-  /*  private static Map<String, Object> checkCSV() throws FileNotFoundException {
-
-       // List<ExampleCSV> comics = new ArrayList<>();
-        Scanner input = new Scanner(System.in);
-        String strFile = "C:\\Files\\XKCD.csv";
-        String line = "";
-        List<String> result = new ArrayList<String>();
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        BufferedReader br = new BufferedReader(new FileReader(strFile));
-
-
-        try {
-
-            while ((line = br.readLine()) != null) {
-
-
-                String[] attributes = line.split(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-
-
-
-                for(int i = 0; i < attributes.length; i++) {
-                    if (!map.containsKey(attributes[i])) {
-
-
-                        result.add(line);
-                        map.put(attributes[i], result);//assigns a key to an ArrayList that stores the value
-                    } else {
-
-                        result = (ArrayList<String>) map.get(attributes[i]);
-                        result.add(line);
-                    }
-
-
-
-                }
-
-
-            }
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        map.get(input.nextLine());
-
-        return map;
-
-    }    */
 
 
     private static ExampleCSV createComic(String[] metadata) {
@@ -197,11 +137,7 @@ public class ExampleCSV {
         List<ExampleCSV> comics = readComicsFromCSV();
 
 
-
-
-
-
-            // output.forEach(c -> System.out.println(c.getTitle()));
+        // output.forEach(c -> System.out.println(c.getTitle()));
 
 
 
@@ -211,30 +147,25 @@ public class ExampleCSV {
         }   */
 
 
-
-       staticFiles.location("/public");
+        staticFiles.location("/public");
 
 
         get("/search", (req, res) -> {
 
-            Map<String, Object> mapa= new HashMap<>();
+            Map<String, Object> mapa = new HashMap<>();
 
 
-
-            return new JadeTemplateEngine().render(new ModelAndView(mapa, "search"))  ;
+            return new JadeTemplateEngine().render(new ModelAndView(mapa, "search"));
         });
 
 
-
-
-
-       post("/query", (req, res) ->{
+        get("/query", (req, res) -> {
 
             Map<String, Object> model = new HashMap<String, Object>();
-            MultipartConfigElement multipartConfigElement = new MultipartConfigElement("C:\\Files\\XKCD.csv");
+            MultipartConfigElement multipartConfigElement = new MultipartConfigElement("C:\\HTW Berlin\\3 SEMESTER\\Comics\\src\\main\\resources\\comics.csv");
             req.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
 
-          String string =  req.queryParams("term");
+            String string = req.queryParams("term");
 
 //System.out.println(string);
 
@@ -242,14 +173,30 @@ public class ExampleCSV {
                 model.put("comics", comics);
             }       */
 
-           List<ExampleCSV>  output = comics.stream()
-                   .filter(comic -> comic.getTitle().contains(string) )
-                   .collect(Collectors.toList());
+List<ExampleCSV> output = null;
+             String  caseSensitive = req.queryParams("sensitive");
+
+
+             if(caseSensitive != null){
+
+
+                 output = comics.stream()
+                         .filter(comic -> comic.getTitle().contains(string))
+                         .collect(Collectors.toList());
+
+
+             }else{
+                 output = comics.stream()
+                         .filter(comic -> comic.getTitle().toLowerCase().contains(string.toLowerCase()))
+                         .collect(Collectors.toList());
+
+             }
+                   
 
             model.put("comics", output);
 
 
-            return new JadeTemplateEngine().render(new ModelAndView(model, "comics"))    ;
+            return new JadeTemplateEngine().render(new ModelAndView(model, "comics"));
 
 
         });
@@ -257,4 +204,4 @@ public class ExampleCSV {
 
     }
 
-
+}
