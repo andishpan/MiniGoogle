@@ -183,7 +183,7 @@ public class ExampleCSV {
 
             if(wholeWord != null){
              patt = comics.stream()
-                        .filter(comic -> comic.getTitle().toLowerCase().matches(".*\\b" + string.toLowerCase() + "\\b.*"))   // whole word with case sensitivity
+                        .filter(comic -> comic.getTitle().toLowerCase().matches(".*\\b" + string.toLowerCase() + "\\b.*"))   
 
                 .collect(Collectors.toList());
 
@@ -193,7 +193,7 @@ public class ExampleCSV {
 
             if(wholeWord != null && caseSensitive != null){
                 patt = comics.stream()
-                        .filter(comic -> comic.getTitle().matches(".*\\b" + string + "\\b.*"))   // whole word without case sensitivity
+                        .filter(comic -> comic.getTitle().matches(".*\\b" + string + "\\b.*"))   
 
                         .collect(Collectors.toList());
 
