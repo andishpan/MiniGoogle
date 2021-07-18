@@ -3,7 +3,6 @@
 
 package bigigoogle;
 
-
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
@@ -11,19 +10,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import static spark.Spark.*;
+
 import spark.template.jade.JadeTemplateEngine;
 import spark.ModelAndView;
 
@@ -48,8 +43,6 @@ public class ExampleCSV {
     public void setURL(String URL) {
         this.URL = URL;
     }
-
-
 
 
     public static CSVReader reader;
@@ -94,7 +87,7 @@ public class ExampleCSV {
 
     private static List<ExampleCSV> readComicsFromCSV() throws FileNotFoundException {
         List<ExampleCSV> comics = new ArrayList<>();
-        String strFile = "C:\\HTW Berlin\\3 SEMESTER\\Comics\\src\\main\\resources\\comics.csv";
+        String strFile = "C:\\Files\\XKCD.csv";
         String line = "";
 
         BufferedReader br = new BufferedReader(new FileReader(strFile));
@@ -123,7 +116,7 @@ public class ExampleCSV {
 
 
     private static ExampleCSV createComic(String[] metadata) {
-        String URL = metadata[0];
+        String URL = metadata[0].replace("\"", "");      // ignore quotes for links
         String alt = metadata[1];
         String title = metadata[2];
 
@@ -133,21 +126,24 @@ public class ExampleCSV {
 
     public static void main(String[] args) throws IOException, CsvValidationException {
 
-
         List<ExampleCSV> comics = readComicsFromCSV();
 
-
         // output.forEach(c -> System.out.println(c.getTitle()));
-
-
-
 
      /*   for (ExampleCSV c : comics) {
             System.out.println(c);
         }   */
 
-
         staticFiles.location("/public");
+
+        //tested res.redirect("/hello");
+        get("/hello", (req, res) -> {
+
+            Map<String, Object> mapa = new HashMap<>();
+
+
+            return "Hello";
+        });
 
 
         get("/search", (req, res) -> {
@@ -162,44 +158,50 @@ public class ExampleCSV {
         get("/query", (req, res) -> {
 
             Map<String, Object> model = new HashMap<String, Object>();
-            MultipartConfigElement multipartConfigElement = new MultipartConfigElement("C:\\HTW Berlin\\3 SEMESTER\\Comics\\src\\main\\resources\\comics.csv");
+            MultipartConfigElement multipartConfigElement = new MultipartConfigElement("C:\\Files\\XKCD.csv");
             req.raw().setAttribute("org.eclipse.jetty.multipartConfig", multipartConfigElement);
 
             String string = req.queryParams("term");
 
-//System.out.println(string);
+
+            //System.out.println(string);
 
           /*  for(ExampleCSV c : testList){         // for each loop is not needed to get data
                 model.put("comics", comics);
             }       */
 
-List<ExampleCSV> output = null;
-             String  caseSensitive = req.queryParams("sensitive");
+            List<ExampleCSV> output = null;
+            String  caseSensitive = req.queryParams("sensitive");
 
 
-             if(caseSensitive != null){
+            if(caseSensitive != null){
 
 
-                 output = comics.stream()
-                         .filter(comic -> comic.getTitle().contains(string))
-                         .collect(Collectors.toList());
+                output = comics.stream()
+                        .filter(comic -> comic.getTitle().contains(string))
+                        .collect(Collectors.toList());
 
+            }else{
+                output = comics.stream()
+                        .filter(comic -> comic.getTitle().toLowerCase().contains(string.toLowerCase()))
+                        .collect(Collectors.toList());
 
-             }else{
-                 output = comics.stream()
-                         .filter(comic -> comic.getTitle().toLowerCase().contains(string.toLowerCase()))
-                         .collect(Collectors.toList());
-
-             }
-                   
+            }
 
             model.put("comics", output);
 
+          // res.redirect("https://xkcd.com/2476/");     // this works
 
             return new JadeTemplateEngine().render(new ModelAndView(model, "comics"));
 
-
         });
+
+
+       // redirect.post("/query", "/search", Redirect.Status.SEE_OTHER);
+
+
+
+
 
 
     }
