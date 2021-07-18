@@ -1,6 +1,7 @@
 
 
 
+
 package bigigoogle;
 
 import com.opencsv.CSVReader;
@@ -15,9 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import java.util.*;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static spark.Spark.*;
+
 
 import spark.template.jade.JadeTemplateEngine;
 import spark.ModelAndView;
@@ -128,6 +131,9 @@ public class ExampleCSV {
 
         List<ExampleCSV> comics = readComicsFromCSV();
 
+
+
+
         // output.forEach(c -> System.out.println(c.getTitle()));
 
      /*   for (ExampleCSV c : comics) {
@@ -171,26 +177,56 @@ public class ExampleCSV {
             }       */
 
             List<ExampleCSV> output = null;
+            List<ExampleCSV> patt = null;
             String  caseSensitive = req.queryParams("sensitive");
+            String wholeWord = req.queryParams("wholeWord");
+
+            if(wholeWord != null){
+             patt = comics.stream()
+                        .filter(comic -> comic.getTitle().toLowerCase().matches(".*\\b" + string.toLowerCase() + "\\b.*"))   // whole word with case sensitivity
+
+                .collect(Collectors.toList());
+
+               model.put("comics", patt);
+            }
 
 
-            if(caseSensitive != null){
+            if(wholeWord != null && caseSensitive != null){
+                patt = comics.stream()
+                        .filter(comic -> comic.getTitle().matches(".*\\b" + string + "\\b.*"))   // whole word without case sensitivity
+
+                        .collect(Collectors.toList());
+
+                model.put("comics", patt);
+
+            }
+
+
+            if(caseSensitive != null ){
 
 
                 output = comics.stream()
                         .filter(comic -> comic.getTitle().contains(string))
                         .collect(Collectors.toList());
+                model.put("comics", output);
 
             }else{
                 output = comics.stream()
                         .filter(comic -> comic.getTitle().toLowerCase().contains(string.toLowerCase()))
                         .collect(Collectors.toList());
+                model.put("comics", output);
 
             }
 
-            model.put("comics", output);
+            if(wholeWord != null){
+                model.put("comics", patt);
+            }
 
-          // res.redirect("https://xkcd.com/2476/");     // this works
+
+
+
+
+            // res.redirect("https://xkcd.com/2476/");     // this works
 
             return new JadeTemplateEngine().render(new ModelAndView(model, "comics"));
 
