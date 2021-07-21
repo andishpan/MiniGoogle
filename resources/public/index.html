@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <link rel="stylesheet" href="style.css">
@@ -8,108 +8,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Google</title>
     <img src="upload_file.png" height="150px" >
+    
+    <script defer src = "script.js"></script>
 </head>
 
-<style>
-
-body{
-    font-family: Arial;
-}
-
-
-
-div.container{
-    display: flex;
-    flex-wrap:wrap;
- 
-
-    width: 40%;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    border: solid 2px;
-    clear: both;
-}
-
-input[type = text], input[type = checkbox]{
-    
-    display: list-item;
-    padding: 7px 7px;
-    margin: 8px 10;
-   
-    
-}
-
-
-input[type=submit] {
-   
-    background-color: #0468aa;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: solid 2px black;
-    border-radius: 4px;
-    cursor: pointer;
-    clear: both;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #eed709;
-  }
-
-
-p{
-   display: none;
-     
-}
-
-
-img{
-    position: relative;
-    left: 30px;
-    margin: 20px;
-   
-}
-</style>
   
 
 <body>
+    <header >
+        <h1 >Mini Google</h1>
+      </header>
+
+   
   
 <hr>
-     <div class = "container">
+
+
+
+    <br>
+    <br>
+
+    <div class = "container">
         
-    <form action = "/query"  method = "GET" enctype="multipart/form-data" >
+    <form action = "/" method = "GET" id = "form">
         <fieldset>
 
-            <legend>Search</legend>
+            <legend id = "legend">Search</legend>
 
             <label > Query term(in title)</label>
-            <input  id = " QueryTerm"type="text" name = "term">
+            <input  id = " QueryTerm" type="text" name = "term" required > 
 
             <label > case sensitive</label>
-            <input id = " sensitive" type="checkbox" name = "sensitive">
+            <input id = " sensitiveCase" type="checkbox" name = "char" >
+            <span id="error"></span>
+            
 
             <label > whole word</label>
-            <input id = " word" type="checkbox"  name = "wholeWord">
+            <input id = " word" type="checkbox"  name = "char">
 
         </fieldset>
 
-        <input type="submit" value = "Submit" name = "getData">
+        <input type="submit" value = "Submit" name = "getData"   >
+
+     
+        
     </form>
 
-    <ul>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
-      </ul> 
+
+    
 
 
-    <p>Your case insensitive search for </p>
-    <p>Your case sensitive search for </p>
 
 
 </div>
 
 
+
+<footer id = "footer">
+    <h2>By Andrian and Mauro</h2>
+</footer>
+
 </body>
+
+
+
 </html>
+
