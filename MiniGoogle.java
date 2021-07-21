@@ -78,8 +78,8 @@ public class MiniGoogle {
         return comics;
     }
 
-  public static  InputStream inputStream = ClassLoader.getSystemResourceAsStream("comics.csv");
 
+    public static  InputStream inputStream = ClassLoader.getSystemResourceAsStream("comics.csv");
 
     private static final List<String> comics = new ArrayList<String>();
 
@@ -162,7 +162,7 @@ public class MiniGoogle {
             String  caseSensitive = req.queryParams("sensitive");
             String wholeWord = req.queryParams("wholeWord");
 
-            
+
        // if the term exists, if the input field isn't empty
     if (comicName != null && !comicName.isEmpty() && comics.stream().anyMatch(c -> c.getTitle().contains(comicName))) {
 
@@ -181,7 +181,7 @@ public class MiniGoogle {
 //ignores case and returns only whole words
         if(wholeWord != null){
             output = comics.stream()
-                    .filter(comic -> comic.getTitle().toLowerCase(Locale.ROOT).matches(".*\\b" + comicName.toLowerCase(Locale.ROOT) + "\\b.*"))              //The matches() method takes a String to represent the regular expression.
+                    .filter(comic -> comic.getTitle().matches("(?i).*" + ".*\\b" + comicName + "\\b.*" + ".*"))              //The matches() method takes a String to represent the regular expression.
                                                                                                                                    // (?i) enables case-insensitivity and .* uses every character except line breaks.
                                                                                                                      //  \\b is used for space, this way we get the whole word and not the word as a part of another word
                     .collect(Collectors.toList());
