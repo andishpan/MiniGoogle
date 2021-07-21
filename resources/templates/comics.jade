@@ -12,46 +12,9 @@ html(lang='en')
     title Mini Google
   body
     img(src='upload_file.png', height='150px')
-    style.
-      body{
-      font-family: Arial;
-      }
-      div.container{
-      display: flex;
-      flex-wrap:wrap;
-      width: 40%;
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-      border: solid 2px;
-      clear: both;
-      }
-      input[type = text], input[type = checkbox]{
-      display: list-item;
-      padding: 7px 7px;
-      margin: 8px 10;
-      }
-      input[type=submit] {
-      background-color: #0468aa;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: solid 2px black;
-      border-radius: 4px;
-      cursor: pointer;
-      clear: both;
-      }
-      input[type=submit]:hover {
-      background-color: #eed709;
-      }
-      p{
-      display: none;
-      }
-      img{
-      position: relative;
-      left: 30px;
-      margin: 20px;
-      }
+    header
+      h1 Mini Google
+   
     |   
     |   
     hr
@@ -63,7 +26,7 @@ html(lang='en')
           |             
           label  Query term(in title)
           |             
-          input#QueryTerm(type='text', name='term')
+          input#QueryTerm(type='text', name='term' required ) 
           |             
           label  case sensitive
           |             
@@ -81,6 +44,8 @@ html(lang='en')
               a(href=comic.URL) #{comic.title}
       |  
       |     
-      p Your case insensitive search for 
-      |     
-      p Your case sensitive search for 
+      
+
+
+      footer#footer
+        h2 By Andrian and Mauro 
